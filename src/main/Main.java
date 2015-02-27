@@ -2,6 +2,7 @@ package main;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import view.ChessView;
@@ -19,6 +20,7 @@ public class Main {
 			@Override
 			public void run() {
 				JFrame frame = new ChessView();
+				frame.setIconImage((new ImageIcon("img/chess-icon.png")).getImage() );
 				frame.setTitle("JavaChess");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
