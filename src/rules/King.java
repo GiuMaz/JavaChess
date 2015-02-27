@@ -12,7 +12,7 @@ import model.Position;
  * implementa il pezzo del re.
  * può muoversi solo nelle 8 caselle adiacenti
  */
-public class King extends AbstractPiece {
+public final class King extends AbstractPiece {
 
 	public King(Position position, ChessColor color)
 	{

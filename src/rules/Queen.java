@@ -13,7 +13,7 @@ import model.Position;
  * la regina può fare le mosse dell'alfiere e della torre
  * 
  */
-public class Queen extends AbstractRayAttacckerPiece {
+public final class Queen extends AbstractRayAttacckerPiece {
 
 	public Queen(Position position, ChessColor color)
 	{

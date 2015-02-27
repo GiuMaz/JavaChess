@@ -37,11 +37,6 @@ public abstract class AbstractPiece implements Piece {
 	@Override
 	abstract public PieceRappresentation getRapresentation();
 	
-	protected String toStringColor()
-	{
-		return color == ChessColor.WHITE ? "W-" : "B-";
-	}
-	
 	abstract public Piece move(Position p);
 	
 	@Override
@@ -50,15 +45,13 @@ public abstract class AbstractPiece implements Piece {
 	}
 	
 	
-	public boolean isLegalMove(Configuration conf, Position to)
-	{
-		return isPseudoLegalMove(conf,to) && (
-				(conf.enemyPieces().contains(this) &&
-						!(new Rules(conf.move(this.position, to) ) ).isEnemyKingInCheck()) 
-				||  (conf.friendPieces().contains(this) &&
-						!(new Rules(conf.move(this.position, to) ) ).isFriendKingInCheck()) );
+	public boolean isLegalMove(Configuration conf, Position to) {
+		if( conf.enemyPieces().contains(this))
+			return isPseudoLegalMove(conf, to) && !(new Rules(conf.move(this.position, to))).isEnemyKingInCheck();
+		else
+			return isPseudoLegalMove(conf, to) 	&& !(new Rules(conf.move(this.position, to))).isFriendKingInCheck() ;
 	}
-	
+
 	@Override
 	public Set<Position> allLegalMove(Configuration conf) {
 		Set<Position> legalmoves = new HashSet<>();

@@ -6,7 +6,7 @@ import view.View;
  * Interfaccia al modello che contiene lo stato attuale del programma
  * 
  * È una classe mutabile che contiene oggetti immutabili che codificano lo stato attuale
- * È formata dalla configuration più le scielte fatte dall'utente.
+ * È formata dalla configuration più le scelte fatte dall'utente.
  * 
  */
 public interface Model {

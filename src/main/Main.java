@@ -6,11 +6,13 @@ import javax.swing.JFrame;
 
 import view.ChessView;
 
+/**
+ * 
+ * @author Bonfante Pietro e Mazzi Giulio
+ *
+ */
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 

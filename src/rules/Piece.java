@@ -17,7 +17,7 @@ import model.Position;
  * nemici (colore opposto).
  * 
  * l'interfaccia permette di:
- * - creare un nuovo pezzo identico a lui ma spostao in una nuova posizione
+ * - creare un nuovo pezzo identico a lui ma spostato in una nuova posizione
  * - identificare se una specifica mossa è legale e pseudo legale
  * - ritornare tutte le sue mosse legali o pseudo legali
  * - ritornare un codice identificativo per rappresentare graficamente il pezzo

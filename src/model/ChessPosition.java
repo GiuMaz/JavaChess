@@ -7,10 +7,10 @@ package model;
  *  Per la descrizione dei singoli metodi si rimanda all'interfaccia
  *
  */
-public class ChessPosition implements Position {
+public final class ChessPosition implements Position {
 
-	private int row;
-	private int col;
+	private final int row;
+	private final int col;
 
 	public ChessPosition(int row, int col)
 	{

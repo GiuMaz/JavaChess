@@ -20,7 +20,7 @@ import rules.Piece;
  *  Per la descrizione dei singoli metodi si rimanda all'interfaccia
  *
  */
-public class ChessConfiguration implements Configuration {
+public final class ChessConfiguration implements Configuration {
 
 	private final Set<Piece> whites;
 	private final Set<Piece> blacks;
@@ -144,21 +144,21 @@ public class ChessConfiguration implements Configuration {
 		if(at(from) == null || ! to.isInBound() )
 			throw new IllegalArgumentException();
 		
-		HashSet<Piece> newWhite = new HashSet<>();
-		for( Piece p: whites)
-			if(!p.getPosition().equals(to) && !p.equals(at(from)))
-				newWhite.add(p);
+		HashSet<Piece> newWhite = new HashSet<>(whites);
+		newWhite.remove(at(from));
+		if( at(to) != null )
+			newWhite.remove(at(to));
 		
-		HashSet<Piece> newBlacks = new HashSet<>();
-		for( Piece p: blacks)
-			if(!p.getPosition().equals(to) && !p.equals(at(from)))
-				newBlacks.add(p);
+		HashSet<Piece> newBlacks = new HashSet<>(blacks);
+		newBlacks.remove(at(from));
+		if( at(to) != null )
+			newBlacks.remove(at(to));
 		
 		if(at(from).getColor() == ChessColor.WHITE)
 			newWhite.add(at(from).move(to));
 		else
 			newBlacks.add(at(from).move(to));
-			
+		
 		return new ChessConfiguration(newWhite,newBlacks,this.turn);
 	}
 	

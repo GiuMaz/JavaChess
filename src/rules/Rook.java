@@ -13,7 +13,7 @@ import model.Position;
  * La torre si può muovere in verticale ed in orizzontale a piacere.
  * 
  */
-public class Rook extends AbstractRayAttacckerPiece {
+public final class Rook extends AbstractRayAttacckerPiece {
 
 	public Rook(Position position, ChessColor color)
 	{

@@ -18,7 +18,7 @@ import model.Position;
  * È l'unico pezzo che può essere promosso, se arriva nel lato opposto della scacchiera
  * 
  */
-public class Pawn extends AbstractPiece implements UpgradablePiece {
+public final class Pawn extends AbstractPiece implements UpgradablePiece {
 
 	public Pawn(Position position, ChessColor color)
 	{
@@ -38,31 +38,32 @@ public class Pawn extends AbstractPiece implements UpgradablePiece {
 	@Override
 	public Set<Position> allPseudoLegalMove(Configuration conf) {
 		Set<Position> moves = new HashSet<>();
-		if(color == ChessColor.WHITE)
-		{
-			if(isInBoundAndNotFriend(conf, position.up()) && !isMyEnemy(conf.at(position.up()))) {
-				moves.add(position.up());
-				if(position.getRow() == 6  && isInBoundAndNotFriend(conf, position.up().up()) && !isMyEnemy(conf.at(position.up().up()) ) )
-					moves.add(position.up().up());
-			}
-			if(isMyEnemy(conf.at(position.up().left())) )
-				moves.add(position.up().left());
-			if(isMyEnemy(conf.at(position.up().right())) )
-				moves.add(position.up().right());
-		}
-		else
-		{
-			if(isInBoundAndNotFriend(conf, position.down())  && !isMyEnemy(conf.at( position.down() )) ) {
-				moves.add(position.down());
-				if(position.getRow() == 1  && isInBoundAndNotFriend(conf, position.down().down()) && !isMyEnemy(conf.at( position.down().down() )) )
-					moves.add(position.down().down());
-			}
-			if(isMyEnemy(conf.at(position.down().left())) )
-				moves.add(position.down().left());
-			if(isMyEnemy(conf.at(position.down().right())) )
-				moves.add(position.down().right());
+		Position index = goAhead(position);
+		if( isMyEnemy( conf.at(index.left())) )
+			moves.add(index.left());
+		if( isMyEnemy(conf.at(index.right())))
+			moves.add(index.right());
+		if( index.isInBound() && conf.isEmpty(index) ) {
+			moves.add(index);
+			index = goAhead(index);
+			if( isInStartRow() && index.isInBound() && conf.isEmpty(index) )
+				moves.add(index);
 		}
 		return moves;
+	}
+	
+	private boolean isInStartRow() {
+		if (color == ChessColor.WHITE)
+			return position.getRow() == 6;
+		else
+			return position.getRow() == 1;
+	}
+
+	private Position goAhead(Position old) {
+		if (color == ChessColor.WHITE)
+			return old.up();
+		else
+			return old.down();
 	}
 	
 	@Override

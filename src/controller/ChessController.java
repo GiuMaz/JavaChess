@@ -32,8 +32,10 @@ public class ChessController implements Controller {
 			Configuration conf = model.getConfiguration();
 			if (model.isSelected())
 			{
+				if( model.getSelection().equals(pos))
+					model.deSelect();
 				// se clicco su di un altro amico volgio cambiare la selezione
-				if( conf.isFriend(pos) )
+				else if( conf.isFriend(pos) )
 					model.setSelection(pos);
 				else {
 					if( (new Rules(conf)).isLegalMove(model.getSelection(), pos) ) 
@@ -41,9 +43,7 @@ public class ChessController implements Controller {
 						model.setConfiguration(conf.move(model.getSelection(), pos));
 						model.setConfiguration(new Upgrader(model.getConfiguration(), view).pieceUpgrade());
 						
-						if( (new Rules(model.getConfiguration())).isCheckmate() )
-						{
-							System.out.println("SCACCO MATTO");
+						if( (new Rules(model.getConfiguration())).isCheckmate()) {
 							model.setGameOver(true);
 							view.onGameOver();
 						}

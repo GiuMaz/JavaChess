@@ -92,25 +92,25 @@ public interface Configuration {
 	public Set<Piece> blackPieces();
 	
 	/**
-	 * ritorna la posizione del re nemico, se assente ritorna null
+	 * ritorna il re nemico, se assente ritorna null
 	 * @return posizione del re nemico
 	 */
 	public Piece enemyKing();
 	
 	/**
-	 * ritorna la posizione del re amico, se assente ritorna null
+	 * ritorna il re amico, se assente ritorna null
 	 * @return posizione del re amico
 	 */
 	public Piece friendKing();
 	
 	/**
-	 * ritorna la posizione del re bianco, se assente ritorna null
+	 * ritorna il re bianco, se assente ritorna null
 	 * @return posizione del re bianco
 	 */
 	public Piece whiteKing();
 	
 	/**
-	 * ritorna la posizione del re nero, se assente ritorna null
+	 * ritorna il re nero, se assente ritorna null
 	 * @return posizione del re nero
 	 */
 	public Piece blackKing();
@@ -135,8 +135,8 @@ public interface Configuration {
 	public Configuration add(Piece piece);
 	
 	/**
-	 * crea una nuova posizione che contiene i pezzi specificati
-	 * nell'insieme
+	 * crea una nuova configurazuine che contiene i pezzi specificati
+	 * nell'insieme, e setta il turno al bianco
 	 * @param pieces i pezzi della nuova scacchiera
 	 * @return
 	 */

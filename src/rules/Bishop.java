@@ -13,7 +13,7 @@ import model.Position;
  * l'alfiere può muoversi solo sulle quattro diagonali
  * 
  */
-public class Bishop extends AbstractRayAttacckerPiece {
+public final class Bishop extends AbstractRayAttacckerPiece {
 
 	public Bishop(Position position, ChessColor color)
 	{

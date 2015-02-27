@@ -12,8 +12,6 @@ package model;
  * della scacchiera.
  * 
  * La classe è immutabile, i metodi di movimento restituiscono nuovi oggetti.
- * 
- * @author Bonfante Pietro e Mazzi Giulio
  *
  */
 public interface Position {

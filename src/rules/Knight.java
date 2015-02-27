@@ -14,7 +14,7 @@ import model.Position;
  * Il cavallo può muoversi ad L, due lungo una direzione e una lungo l'ortogonale
  * 
  */
-public class Knight extends AbstractPiece {
+public final class Knight extends AbstractPiece {
 
 	public Knight(Position position, ChessColor color)
 	{
