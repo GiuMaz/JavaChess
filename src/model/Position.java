@@ -63,4 +63,16 @@ public interface Position {
 	 * @return true se e solo se la posizione è interna alla scacchiera
 	 */
 	public boolean isInBound();
+
+	/**
+	 * restituisce true se e solo se la posizione è di colore chiaro
+	 * @return true se e solo se la posizione è di colore chiaro
+	 */
+	boolean isLightColor();
+
+	/**
+	 * restituisce true se e solo se la posizione è di colore scuro
+	 * @return true se e solo se la posizione è di colore scuro
+	 */
+	boolean isDarkColor();
 }

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.List;
+import java.util.Set;
+
 import view.View;
 
 /**
@@ -65,4 +68,19 @@ public interface Model {
 	 * @param gameOver true se e solo se il gioco è finito
 	 */
 	public void setGameOver(boolean gameOver);
+
+	/**
+	 * restiruisce una lista iterabile di tutte le posizioni della scacchiera
+	 * sono ordinate dall'alto verso il basso, da sinistra verso destra.
+	 * @return
+	 */
+	public List<Position> allBoardPosition();
+	
+	/**
+	 * se un pezzo è selezionato ritorna l'insieme delle posizioni legali in cui
+	 * muoversi.
+	 * Se nulla è selezionato ritorna un insieme vuoto
+	 * @return le possibili mosse, se presenti
+	 */
+	public Set<Position> getSelectionPossibleMove();
 }

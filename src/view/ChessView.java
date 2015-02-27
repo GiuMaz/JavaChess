@@ -44,6 +44,10 @@ public class ChessView extends JFrame implements View {
 	private Model model = new ChessModel( new ChessConfiguration());
 	private Controller controller = new ChessController(this);
 	
+	// setto colori per evidenzizione
+	private static final Color DARK_GREEN = Color.decode("#00A300");
+	private static final Color LIGHT_GREEN = Color.decode("#7CFC00");
+	
 	private static final long serialVersionUID = 1L;
 
 	JButton[][] board = new JButton[8][8];
@@ -83,7 +87,7 @@ public class ChessView extends JFrame implements View {
 		
 		for( int row = 0; row < 8; row++ )
 			for( int col = 0; col < 8; col++)
-				newBoard.add(board[row][col] = mkButton(row,col));
+				newBoard.add(board[row][col] = mkButton(model.getConfiguration().makePosition(row, col)));
 		
 		onConfigurationChange();
 		return newBoard;
@@ -102,29 +106,28 @@ public class ChessView extends JFrame implements View {
 		
 	}
 
-	private JButton mkButton(final int row, final int col) {
-		
+	private JButton mkButton(final Position pos) {
 		JButton newButton = new JButton();
 		newButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if ( controller != null ) {
-					final Position makePosition = model.getConfiguration().makePosition(row, col);
-					controller.onClick( makePosition );
+					controller.onClick( pos );
 				}
 			}
 		});
 		
 		newButton.setPreferredSize(new Dimension(80,80) );
-		
-		if( ( row%2 == 0 && col % 2 == 0) || ( row%2 == 1 && col % 2 == 1) )
+		if( pos.isLightColor() )
+		{
 			newButton.setBackground(Color.LIGHT_GRAY);
-		else
+			newButton.setBorder(new LineBorder(LIGHT_GREEN,4));
+		}
+		else {
 			newButton.setBackground(Color.DARK_GRAY);
+			newButton.setBorder(new LineBorder(DARK_GREEN,4));
+		}
 		
-		
-		newButton.setBorder(new LineBorder(Color.GREEN,4));
 		newButton.setBorderPainted(false);
 		newButton.setFocusable(false);
 		return newButton;
@@ -133,15 +136,12 @@ public class ChessView extends JFrame implements View {
 	@Override
 	public void onConfigurationChange() {
 		Configuration conf = model.getConfiguration();
-		
-		for( int row = 0; row < 8; row++ ) {
-			for( int col = 0; col < 8; col++) {
-				Position pos = conf.makePosition(row, col);
-				if ( conf.at( pos ) != null)
-					board[row][col].setIcon( getImage(conf.at(pos).getRapresentation()) );
-				else
-					board[row][col].setIcon(null);
-			}
+		for( Position pos : model.allBoardPosition() )
+		{
+			if ( conf.at( pos ) != null)
+				buttonAt(pos).setIcon( getImage(conf.at(pos).getRapresentation()) );
+			else
+				buttonAt(pos).setIcon(null);
 		}
 	}
 
@@ -172,7 +172,7 @@ public class ChessView extends JFrame implements View {
 
 	@Override
 	public void onGameOver() {
-		int answer = JOptionPane.showConfirmDialog(this, "The  player win! Do you want to start a new game?",
+		int answer = JOptionPane.showConfirmDialog(this, "You win! Do you want to start a new game?",
 				"Game over",JOptionPane.YES_NO_OPTION);
 		if(answer == JOptionPane.OK_OPTION)
 			controller.onNewGame();
@@ -181,7 +181,7 @@ public class ChessView extends JFrame implements View {
 	@Override
 	public void onNewGameRequest() {
 		int answer = JOptionPane.showConfirmDialog(this, "Do you want to start a new game?",
-				"Game over",JOptionPane.YES_NO_OPTION);
+				"New Game",JOptionPane.YES_NO_OPTION);
 		if(answer == JOptionPane.OK_OPTION)
 			controller.onNewGame();
 
@@ -193,18 +193,29 @@ public class ChessView extends JFrame implements View {
 	}
 
 	@Override
-	public void onSelectionChange() {
+	public void onSelectionChange(){
 		
-		for( int row = 0; row < 8; row++ ) {
-			for( int col = 0; col < 8; col++) {
-				Position pos = model.getConfiguration().makePosition(row, col);
-				if ( model.isSelected() &&  model.getSelection().equals(pos) )
-					board[row][col].setBorderPainted(true);
+		for(Position pos : model.allBoardPosition())
+		{
+			if ( model.isSelected() &&  model.getSelection().equals(pos) )
+				buttonAt(pos).setBorderPainted(true);
+			else
+				buttonAt(pos).setBorderPainted(false);
+			
+			if( pos.isLightColor() )
+			{
+				if (model.getSelectionPossibleMove().contains(pos))
+					buttonAt(pos).setBackground(LIGHT_GREEN);
 				else
-					board[row][col].setBorderPainted(false);
+					buttonAt(pos).setBackground(Color.LIGHT_GRAY);
 			}
-		}
-		
+			else {
+				if (model.getSelectionPossibleMove().contains(pos))
+					buttonAt(pos).setBackground(DARK_GREEN);
+				else
+					buttonAt(pos).setBackground(Color.DARK_GRAY);
+			}
+		}	
 	}
 
 	@Override
@@ -217,5 +228,11 @@ public class ChessView extends JFrame implements View {
 		else 
 			return selection;
 	}
-
+	
+	private JButton buttonAt(Position pos) {
+		if(pos.isInBound())
+			return board[pos.getRow()][pos.getColumn()];
+		else
+			return null;
+	}
 }

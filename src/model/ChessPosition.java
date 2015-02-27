@@ -64,5 +64,16 @@ public final class ChessPosition implements Position {
 	public int hashCode() {
 		return row | (col << 4) ;
 	}
+	
+	@Override
+	public boolean isLightColor() {
+		return ((getRow() % 2 == 0 && getColumn() % 2 == 0) 
+				|| (getRow() % 2 == 1 && getColumn() % 2 == 1));
+	}
+
+	@Override
+	public boolean isDarkColor() {
+		return !isLightColor();
+	}
 
 }
